@@ -1,0 +1,11 @@
+{
+  "name": "windows-colors",
+  "displayName": "Windows Colors",
+  "author": "xpdustry",
+  "main": "com.xpdustry.windowscolors.WindowsColorsPlugin",
+  "description": "Enables ANSI colors on Windows consoles (e.g. cmd).",
+  "version": "1.0.0",
+  "minGameVersion": "146",
+  "hidden": false,
+  "java": true
+}
