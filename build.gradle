@@ -1,55 +1,41 @@
 plugins {
     id "java"
-    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id "com.xpdustry.toxopid" version "4.1.2"
 }
 
-group = "com.xpdustry"
-version = "1.0.0"
+import com.xpdustry.toxopid.spec.ModPlatform
+import com.xpdustry.toxopid.spec.ModMetadata
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+group = "com.xpdustry"
+
+def metadata = ModMetadata.fromJson(project.file("plugin.json"))
+version = metadata.version
+
+toxopid {
+    compileVersion = "v146"
+    runtimeVersion = "v146"
+    platforms.set([ModPlatform.DESKTOP, ModPlatform.SERVER] as Set)
 }
 
 repositories {
     mavenCentral()
-    maven { url = "https://www.jitpack.io" }
-}
-
-ext {
-    mindustryVersion = "v146"
+    maven { url = "https://maven.xpdustry.com/mindustry" }
 }
 
 dependencies {
-    compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
-    compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
+    compileOnly "com.github.Anuken.Mindustry:core:${toxopid.compileVersion.get()}"
+    compileOnly "com.github.Anuken.Arc:arc-core:${toxopid.compileVersion.get()}"
     
     implementation "org.fusesource.jansi:jansi-native:1.1"
 }
 
-jar {
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-}
-
-shadowJar {
-    archiveClassifier.set("")
-    from(rootProject.file("plugin.json")) {
-        into("")
-    }
-    
-    mergeServiceFiles()
-    
-    minimize()
-}
-
 tasks.register("getArtifactPath") {
     doLast {
-        println shadowJar.archiveFile.get().toString()
+        println mergeJar.archiveFile.get().toString()
     }
 }
 
-build.dependsOn shadowJar
+build.dependsOn mergeJar
+
+
 
