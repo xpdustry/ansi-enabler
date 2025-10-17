@@ -1,0 +1,10 @@
+name: ansi-enabler
+displayName: Ansi Enabler
+author: ZetaMap
+main: com.xpdustry.ansi.Ansi
+description: Enables ANSI colors on Windows consoles (e.g. cmd).
+version: "1.0"
+//minGameVersion: "146" // be compatible with v6, v7 and v8
+hidden: true
+java: true
+repo: xpdustry/ansi-enabler
